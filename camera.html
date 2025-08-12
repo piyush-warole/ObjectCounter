@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webcam Permission Test</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    video {
+      display: none;
+      border: 3px solid white;
+      border-radius: 8px;
+      max-width: 90%;
+      max-height: 80vh;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #28a745;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+    }
+    button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Webcam Access Demo</h1>
+  <p>Click the button below to start the webcam.</p>
+  <button id="startBtn">Start Webcam</button>
+  <video id="video" autoplay playsinline></video>
+
+  <script>
+    document.getElementById("startBtn").addEventListener("click", async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const videoElement = document.getElementById("video");
+        videoElement.srcObject = stream;
+        videoElement.style.display = "block";
+        document.getElementById("startBtn").style.display = "none";
+      } catch (err) {
+        console.error("Camera error:", err);
+        alert("Unable to access camera: " + err.message);
+      }
+    });
+  </script>
+
+</body>
+</html>
